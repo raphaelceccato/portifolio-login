@@ -6,9 +6,8 @@ app.set("view engine", "ejs");
 
 
 app.get("/", (req, res) => {
-    res.redirect("login");
+    return res.redirect("login");
 });
-
 
 app.get("/login", (req, res) => {
     return res.render("main", {page: "login"});
