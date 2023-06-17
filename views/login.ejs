@@ -1,11 +1,12 @@
-<div class="w-100 h-100 d-flex">
-    <div id="loginBox" class="border shadow-sm">
+<div class="d-flex align-items-center justify-content-center" style="width: 100vw; height: 100vh">
+    <div id="loginBox" class="border shadow-sm p-4">
         <form method="post" action="/login">
             <label for="user">Nome de usuário:</label>
             <input id="user" name="user" type="text" class="form-control"/>
             <label for="pwd">Senha:</label>
             <input id="pwd" name="pwd" type="password" class="form-control"/>
-            <input id="remember" name="remember" type="checkbox" value="Remember me">
+            <input id="remember" name="remember" type="checkbox">
+            <label for="remember">Lembrar de mim</label>
             <br>
             <input type="submit" class="btn btn-primary" value="Login">
             <input type="button" class="btn btn-secondary" value="Register">
