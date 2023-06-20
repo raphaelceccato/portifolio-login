@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const MemoryStore = require('memorystore')(session);
+const main_controller = require("./controllers/main_controller.js");
 
 const app = express();
 const port = 3000;
@@ -16,17 +17,7 @@ app.use(session({
 }));
 
 
-app.get("/", (req, res) => {
-    return res.redirect("login");
-});
-
-app.get("/login", (req, res) => {
-    return res.render("main", {page: "login"});
-});
-
-app.get("/account", (req, res) => {
-    return res.render("login", {page: "account"});
-});
+app.use("/", main_controller);
 
 app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`);
