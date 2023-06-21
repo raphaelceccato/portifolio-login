@@ -31,7 +31,17 @@ router.post("/login", (req, res) => {
     let s = req.session;
     if (Auth.isLoggedIn(s))
         Auth.logout(s);
-    
+    let username = (req.body.user ?? "");
+    let password = (req.body.pwd ?? "");
+    Auth.login(username, password)
+    .then((result) => {
+        if (result == "ok")
+            res.redirect("/account");
+        else
+            res.render("main", { page: "login", msg: result });
+    }).catch((error) => {
+        res.render("main", { page: "login", msg: "An error has occurred" });
+    });
 });
 
 
