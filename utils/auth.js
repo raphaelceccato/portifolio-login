@@ -1,5 +1,8 @@
+const Account = require("../models/account.js");
+
+
 function isLoggedIn(session) {
-    return (login in session);
+    return (session.login != null)
 }
 
 
@@ -13,6 +16,18 @@ function getLoginInfo(session) {
 function login(session, username, password) {
     if (isLoggedIn(session))
         logout(session);
+    
+    return new Promise((resolve, reject) => {
+        Account.getAccountInfoByUsername(username, password)
+        .then((accInfo) => {
+            if (accInfo == null)
+                return resolve("Invalid username and/or password");
+            return resolve(accInfo);
+        })
+        .catch(error => {
+            return reject(error);
+        });
+    });
 }
 
 
