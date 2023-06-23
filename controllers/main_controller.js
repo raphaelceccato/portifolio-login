@@ -33,7 +33,7 @@ router.post("/login", (req, res) => {
         Auth.logout(s);
     let username = (req.body.user ?? "");
     let password = (req.body.pwd ?? "");
-    Auth.login(username, password)
+    Auth.login(req.session, username, password)
     .then((result) => {
         if (result == "ok")
             res.redirect("/account");
