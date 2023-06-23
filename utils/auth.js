@@ -1,4 +1,6 @@
 const Account = require("../models/account.js");
+const bcrypt = require("bcrypt");
+
 
 
 function isLoggedIn(session) {
@@ -17,10 +19,13 @@ function login(session, username, password) {
     if (isLoggedIn(session))
         logout(session);
     
-    return new Promise((resolve, reject) => {
+    return new Promise(async(resolve, reject) => {
         Account.getAccountInfoByUsername(username, password)
-        .then((accInfo) => {
+        .then(async (accInfo) => {
             if (accInfo == null)
+                return resolve("Invalid username and/or password");
+            let hashedPassword = await bcrypt.hash(password, accInfo.pwd_rounds);
+            if (hashedPassword != accInfo.password)
                 return resolve("Invalid username and/or password");
             session.login = accInfo;
             return resolve("ok");
