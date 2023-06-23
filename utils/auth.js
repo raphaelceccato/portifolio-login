@@ -22,7 +22,8 @@ function login(session, username, password) {
         .then((accInfo) => {
             if (accInfo == null)
                 return resolve("Invalid username and/or password");
-            return resolve(accInfo);
+            session.login = accInfo;
+            return resolve("ok");
         })
         .catch(error => {
             return reject(error);
