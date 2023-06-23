@@ -5,7 +5,7 @@
                 <form method="post" action="/login">
                     <h3>Entrar</h3>
                     <% if (typeof(msg) != "undefined") { %>
-                        <div style="display: none" class="border border-danger bg-danger"><%= msg %></div>
+                        <div class="text-danger"><%= msg %></div>
                     <% } %>
                     <label for="user">Nome de usuário:</label>
                     <input id="user" name="user" type="text" class="form-control"/>
