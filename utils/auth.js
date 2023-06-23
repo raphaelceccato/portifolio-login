@@ -23,10 +23,10 @@ function login(session, username, password) {
         Account.getAccountInfoByUsername(username, password)
         .then(async (accInfo) => {
             if (accInfo == null)
-                return resolve("Invalid username and/or password");
+                return resolve("Nome de usuário e/ou senha inválido(s)");
             let hashedPassword = await bcrypt.hash(password, accInfo.pwd_rounds);
             if (hashedPassword != accInfo.password)
-                return resolve("Invalid username and/or password");
+                return resolve("Nome de usuário e/ou senha inválido(s)");
             session.login = accInfo;
             return resolve("ok");
         })

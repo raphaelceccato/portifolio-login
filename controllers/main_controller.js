@@ -1,7 +1,7 @@
 const express = require("express");
 const Auth = require("../utils/auth.js");
 
-const PUBLIC_PAGES = new Set(["/", "/login", "/logout"]);
+const PUBLIC_PAGES = new Set(["/", "/login", "/logout", "/register"]);
 
 
 let router = express.Router();
@@ -40,8 +40,13 @@ router.post("/login", (req, res) => {
         else
             res.render("main", { page: "login", msg: result });
     }).catch((error) => {
-        res.render("main", { page: "login", msg: "An error has occurred" });
+        res.render("main", { page: "login", msg: "Erro interno de servidor" });
     });
+});
+
+
+router.get("/register", (req, res) => {
+    return res.render("main", {page: "register"});
 });
 
 
