@@ -24,8 +24,8 @@ function login(session, username, password) {
         .then(async (accInfo) => {
             if (accInfo == null)
                 return resolve("Nome de usuário e/ou senha inválido(s)");
-            let hashedPassword = await bcrypt.hash(password, accInfo.pwd_rounds);
-            if (hashedPassword != accInfo.password)
+            let pwdCorrect = await bcrypt.compare(password, accInfo.password);
+            if (!pwdCorrect)
                 return resolve("Nome de usuário e/ou senha inválido(s)");
             session.login = accInfo;
             return resolve("ok");
@@ -42,9 +42,24 @@ function logout(session) {
 }
 
 
+function register(username, password) {
+    return new Promise((resolve, reject) => {
+        Account.create(username, password)
+        .then(result => {
+            return resolve("ok");
+        }).catch(error => {
+            if (error.code == "ER_DUP_ENTRY")
+                return resolve("O nome de usuário especificado já está em uso, por favor escolha outro.");
+            return reject(error);
+        });
+    });
+}
+
+
 module.exports = {
     isLoggedIn,
     getLoginInfo,
     login,
-    logout
+    logout,
+    register
 }
