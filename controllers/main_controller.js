@@ -73,4 +73,9 @@ router.get("/registered", (req, res) => {
 });
 
 
+router.get("/account", (req, res) => {
+    return res.render("main", {page: "account"});
+});
+
+
 module.exports = router;
