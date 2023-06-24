@@ -1,6 +1,8 @@
 const db = require("../utils/database.js");
 const bcrypt = require("bcrypt");
 
+const BCRYPT_ROUNDS = 12;
+
 
 function getAccountInfoByUsername(username) {
     let sql = db.getConnection();
@@ -18,10 +20,9 @@ function getAccountInfoByUsername(username) {
 
 function create(username, password) {
     let sql = db.getConnection();
-    const rounds = 12; //bcrypt rounds
     return new Promise(async (resolve, reject) => {
-        let hashedPassword = await bcrypt.hash(password, rounds);
-        sql.query("INSERT INTO accounts SET username=?, password=?, pwd_rounds=?", [username, hashedPassword, rounds], (error, result) => {
+        let hashedPassword = await bcrypt.hash(password, BCRYPT_ROUNDS);
+        sql.query("INSERT INTO accounts SET username=?, password=?, pwd_rounds=?", [username, hashedPassword, BCRYPT_ROUNDS], (error, result) => {
             if (error) {
                 if (error.code != "ER_DUP_ENTRY")
                    console.error("Error on creating account: ", error);
@@ -33,7 +34,38 @@ function create(username, password) {
 }
 
 
+function changePassword(accountId, newPassword) {
+    let sql = db.getConnection();
+    return new Promise(async (resolve, reject) => {
+        let hashedPassword = await bcrypt.hash(newPassword, BCRYPT_ROUNDS);
+        sql.query("UPDATE accounts SET password=?, pwd_rounds=? WHERE id = ?", [hashedPassword, BCRYPT_ROUNDS, accountId], (error, result) => {
+            if (error) {
+                console.error("Error on changing password: ", error);
+                return reject(error);
+            }
+            return resolve("ok");
+        });
+    });
+}
+
+
+function erase(accountId) {
+    let sql = db.getConnection();
+    return new Promise(async (resolve, reject) => {
+        sql.query("DELETE FROM accounts WHERE id = ?", [accountId], (error, result) => {
+            if (error) {
+                console.error("Error on deleting account: ", error);
+                return reject(error);
+            }
+            return resolve("ok");
+        });
+    });
+}
+
+
 module.exports = {
     getAccountInfoByUsername,
-    create
+    create,
+    changePassword,
+    erase
 }
