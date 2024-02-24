@@ -1,7 +1,6 @@
 const express = require('express');
 const session = require('express-session');
 const MemoryStore = require('memorystore')(session);
-const bodyParser = require("body-parser");
 const main_controller = require("./controllers/main_controller.js");
 
 const app = express();
@@ -16,8 +15,7 @@ app.use(session({
     resave: false,
     secret: '4742338820204490440'
 }));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(express.json());
 
 
 app.use("/", main_controller);
