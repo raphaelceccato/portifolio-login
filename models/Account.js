@@ -11,7 +11,6 @@ const Account = db.define("account", {
     password: {
         type: sequelize.DataTypes.CHAR(255),
         allowNull: false,
-        unique: true
     },
     email: {
         type: sequelize.DataTypes.CHAR(255),
