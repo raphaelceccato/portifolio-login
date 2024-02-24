@@ -3,15 +3,15 @@
         <h2>Cadastro</h2>
         <hr class="mt-2 mb-3">
         <p>Preencha os campos abaixo para criar sua conta:</p>
-        <form action="/cadastro" method="post">
+        <form onsubmit="onSubmit()">
             <label class="form-label" for="usuario">Usuário</label>
             <input class="form-control" type="text" id="usuario" name="usuario" required>
-            <label class="form-label mt-2" for="senha">Senha</label>
-            <input class="form-control" type="password" id="senha" name="senha" required>
-            <label class="form-label mt-2" for="senha">Confirmar senha</label>
-            <input class="form-control" type="password" id="senha" name="senha" required>
-            <label class="form-label mt-2" for="usuario">E-mail</label>
-            <input class="form-control" type="text" id="usuario" name="usuario" required>
+            <label class="form-label mt-2" for="senha1">Senha</label>
+            <input class="form-control" type="password" id="senha1" name="senha1" required>
+            <label class="form-label mt-2" for="senha2">Confirmar senha</label>
+            <input class="form-control" type="password" id="senha2" name="senha2" required>
+            <label class="form-label mt-2" for="email">E-mail</label>
+            <input class="form-control" type="text" id="email" name="email" required>
             <br>
             <div class="d-flex flex-column align-items-center gap-2">
                 <div class="d-flex flex-row gap-2">
@@ -22,3 +22,35 @@
         </form>
     </div>
 </div>
+
+
+<script>
+    function onSubmit() {
+        event.preventDefault();
+        let formData = new FormData(document.querySelector("form"));
+        let data = {};
+        formData.forEach((value, key, _) => data[key] = value);
+        if (data.senha1 != data.senha2) {
+            bootbox.alert("As duas senhas não coincidem, por favor digite novamente");
+        } else {
+            data.senha = data.senha1;
+            delete data.senha1;
+            delete data.senha2;
+
+            document.querySelector("input[type='submit']").disabled = true;
+
+            fetch("/cadastro", { method: "POST", headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data) })
+            .then(res => res.json())
+            .then(res => {
+                document.querySelector("input[type='submit']").disabled = false;
+                
+                if (res.success)
+                    window.location.href = "/cadastro/concluido";
+                else
+                    bootbox.alert(res.error);
+            })
+            .catch(err => console.error(err));
+        }
+    }
+</script>
