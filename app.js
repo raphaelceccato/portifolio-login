@@ -2,6 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const MemoryStore = require('memorystore')(session);
 const main_controller = require("./controllers/main_controller.js");
+const auth_controller = require("./controllers/auth_controller.js");
 
 const app = express();
 const port = 3000;
@@ -20,6 +21,7 @@ app.use(express.json());
 
 
 app.use("/", main_controller);
+app.use("/", auth_controller)
 
 app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`);
