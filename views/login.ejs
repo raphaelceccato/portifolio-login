@@ -3,7 +3,7 @@
         <h2>Login</h2>
         <hr class="mt-2 mb-3">
         <p>Faça login para continuar</p>
-        <form action="/login" method="post">
+        <form onsubmit="onSubmit()">
             <label class="form-label" for="usuario">Usuário</label>
             <input class="form-control" type="text" id="usuario" name="usuario" required>
             <label class="form-label mt-2" for="senha">Senha</label>
@@ -16,3 +16,28 @@
         </form>
     </div>
 </div>
+
+
+<script>
+    function onSubmit() {
+        event.preventDefault();
+        let formData = new FormData(document.querySelector("form"));
+        let data = {};
+        formData.forEach((value, key, _) => data[key] = value);
+
+        document.querySelector("input[type='submit']").disabled = true;
+
+        fetch("/login", { method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data) })
+        .then(res => res.json())
+        .then(res => {
+            document.querySelector("input[type='submit']").disabled = false;
+
+            if (res.success)
+                window.location.href = "/";
+            else
+                bootbox.alert(res.error);
+        })
+        .catch(err => console.error(err));
+    }
+</script>
