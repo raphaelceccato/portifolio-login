@@ -22,8 +22,16 @@ app.use(session({
 app.use(express.json());
 
 
+app.use("/", auth_controller);
+
+const checkLogin = (req, res, next) => {
+  if (!req.session.user)
+      res.redirect("/login");
+  next();
+}
+app.use(checkLogin);
+
 app.use("/", main_controller);
-app.use("/", auth_controller)
 
 
 db.authenticate()
