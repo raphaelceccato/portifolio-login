@@ -1,7 +1,8 @@
 const sequelize = require("sequelize");
+const db = require("../db.js");
 
 
-const Account = sequelize.Model.define("account", {
+const Account = db.define("account", {
     user: {
         type: sequelize.DataTypes.CHAR(20),
         allowNull: false,
