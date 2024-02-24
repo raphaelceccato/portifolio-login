@@ -4,6 +4,7 @@ const MemoryStore = require('memorystore')(session);
 const main_controller = require("./controllers/main_controller.js");
 const auth_controller = require("./controllers/auth_controller.js");
 const db = require("./db.js");
+const Account = require("./models/Account.js");
 
 const app = express();
 const port = 3000;
