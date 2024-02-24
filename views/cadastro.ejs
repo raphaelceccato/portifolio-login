@@ -1,0 +1,24 @@
+<div class="vw-100 vh-100 d-flex align-items-center justify-content-center" style="background-color: rgb(190, 190, 190)">
+    <div class="box d-flex flex-column">
+        <h2>Cadastro</h2>
+        <hr class="mt-2 mb-3">
+        <p>Preencha os campos abaixo para criar sua conta:</p>
+        <form action="/cadastro" method="post">
+            <label class="form-label" for="usuario">Usuário</label>
+            <input class="form-control" type="text" id="usuario" name="usuario" required>
+            <label class="form-label mt-2" for="senha">Senha</label>
+            <input class="form-control" type="password" id="senha" name="senha" required>
+            <label class="form-label mt-2" for="senha">Confirmar senha</label>
+            <input class="form-control" type="password" id="senha" name="senha" required>
+            <label class="form-label mt-2" for="usuario">E-mail</label>
+            <input class="form-control" type="text" id="usuario" name="usuario" required>
+            <br>
+            <div class="d-flex flex-column align-items-center gap-2">
+                <div class="d-flex flex-row gap-2">
+                    <input class="btn btn-primary px-4" type="submit" value="Cadastrar">
+                    <a href="/login" class="btn btn-secondary px-4">Voltar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
