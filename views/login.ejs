@@ -1,0 +1,18 @@
+<div class="vw-100 vh-100 d-flex align-items-center justify-content-center" style="background-color: rgb(190, 190, 190)">
+    <div class="box d-flex flex-column">
+        <h2>Login</h2>
+        <hr class="mt-2 mb-3">
+        <p>Faça login para continuar</p>
+        <form action="/login" method="post">
+            <label class="form-label" for="usuario">Usuário</label>
+            <input class="form-control" type="text" id="usuario" name="usuario" required>
+            <label class="form-label mt-2" for="senha">Senha</label>
+            <input class="form-control" type="password" id="senha" name="senha" required>
+            <br>
+            <div class="d-flex flex-column align-items-center gap-2">
+                <input class="btn btn-primary px-4" type="submit" value="Entrar">
+                <a href="/cadastro">Não tem uma conta? Cadastre-se!</a>
+            </div>
+        </form>
+    </div>
+</div>
