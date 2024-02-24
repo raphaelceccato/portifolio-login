@@ -9,7 +9,7 @@ const Account = db.define("account", {
         unique: true
     },
     password: {
-        type: sequelize.DataTypes.CHAR(20),
+        type: sequelize.DataTypes.CHAR(255),
         allowNull: false,
         unique: true
     },
